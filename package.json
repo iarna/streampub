@@ -1,12 +1,16 @@
 {
   "name": "streampub",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A streaming EPUB3 writer/generator.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["epub", "epub3", "writer"],
+  "keywords": [
+    "epub",
+    "epub3",
+    "writer"
+  ],
   "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
   "license": "ISC",
   "repository": {

@@ -69,7 +69,7 @@ function Chapter (index, chapterName, fileName, content) {
 
 Streampub.prototype._transform = function (data, encoding, done) {
   var self = this
-  normalizeXHTML(data.content).catch(done).then(function (html) {
+  return normalizeXHTML(data.content).catch(done).then(function (html) {
     var id = ++self.maxId
     var index = data.index || (100000 + id)
     var fileName = data.fileName || ('streampub-chapter-' + id + '.xhtml')

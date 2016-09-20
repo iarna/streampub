@@ -95,7 +95,6 @@ There are a bunch of epub generators already available.  Many are pre EPUB3.
 Most work off of files on disk rather than in memory constructs.  Only one
 other provides a stream that I was able to find was
 [epub-generator](https://npmjs.com/package/epub-generator) and it only
-provides a read stream.  I wanted to be able to build a full pipeline so
-that, for instance, the whole pipeline would support backpressure.  I also
-very much wanted to be able to set epub metadata after object construction
-time.
+provides a read stream.  I wanted to be able to build a full pipeline for,
+for example, backpressure reasons.  I also very much wanted to be able to
+set epub metadata after object construction time.

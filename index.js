@@ -60,6 +60,7 @@ Streampub.prototype._flush = function (done) {
   }).then(function () {
     self.zip.once('finish', done)
     self.zip.finalize()
+    return null
   })
 }
 
@@ -69,7 +70,7 @@ function Chapter (index, chapterName, fileName, content) {
 
 Streampub.prototype._transform = function (data, encoding, done) {
   var self = this
-  return normalizeXHTML(data.content).catch(done).then(function (html) {
+  normalizeXHTML(data.content).catch(done).then(function (html) {
     var id = ++self.maxId
     var index = data.index || (100000 + id)
     var fileName = data.fileName || ('streampub-chapter-' + id + '.xhtml')
@@ -77,7 +78,9 @@ Streampub.prototype._transform = function (data, encoding, done) {
     self.files.push({fileName: fileName, mime: 'application/xhtml+xml', id: 'file' + id})
     self.header.then(function () {
       return self.zip.entry(html, {name: 'OEBPS/' + fileName})
-    }).then(function () { done() }, done)
+    }).finally(function () {
+      done()
+    })
   })
 }
 

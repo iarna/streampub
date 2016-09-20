@@ -4,18 +4,9 @@ var Transform = require('readable-stream').Transform
 var zlib = require('zlib')
 var ZipStream = require('zip-stream')
 var inherits = require('util').inherits
-var tidy = Bluebird.promisify(require('htmltidy').tidy)
 var xml = require('xml')
 var uuid = require('uuid')
-
-// there's a bug in htmltidy where the first invocation sometimes results in an empty result =/
-function retidy (content, opts, count) {
-  if (!count) count = 1
-  return tidy(content, opts).then(function (html) {
-    if (count < 20 && content.length !== 0 && html.length === 0) return retidy(content, opts, ++count)
-    return html
-  })
-}
+var normalizeXHTML = require('./normalize-xhtml.js')
 
 module.exports = Streampub
 module.exports.newChapter = Chapter
@@ -78,20 +69,7 @@ function Chapter (index, chapterName, fileName, content) {
 
 Streampub.prototype._transform = function (data, encoding, done) {
   var self = this
-  var tidyOpt = {
-    'output-xhtml': true,
-    'doctype': 'html5',
-    'add-xml-decl': true,
-    'coerce-endtags': true,
-    'enclose-block-text': true,
-    'drop-proprietary-attributes': true,
-    'strict-tags-attributes': true,
-    'clean': true,
-    'quote-nbsp': false,
-    'numeric-entities': true
-  }
-  retidy(data.content, tidyOpt).catch(done).then(function (html) {
-
+  normalizeXHTML(data.content).catch(done).then(function (html) {
     var id = ++self.maxId
     var index = data.index || (100000 + id)
     var fileName = data.fileName || ('streampub-chapter-' + id + '.xhtml')

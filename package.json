@@ -30,6 +30,7 @@
     "zip-stream": "^1.1.0"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "normalize-xhtml.js"
   ]
 }

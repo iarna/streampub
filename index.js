@@ -129,8 +129,10 @@ function w3cdtc (date) {
 Streampub.prototype._generateMetadata = function () {
   var metadata = [{_attr: {'xmlns:dc': 'http://purl.org/dc/elements/1.1/'}}]
   metadata.push({'dc:identifier': [{_attr: {id: 'pub-id'}}, 'url:uuid:' + uuid.v4()]})
+  metadata.push({'dc:identifier': [{_attr: {'opf:scheme': 'URL'}}, this.meta.source]})
   metadata.push({'dc:language': this.meta.language})
   metadata.push({'dc:title': this.meta.title})
+
   metadata.push({'meta': [{_attr: {property: 'dcterms:modified'}}, w3cdtc(this.meta.modified)]})
   if (this.meta.source) {
     metadata.push({'dc:source': this.meta.source})

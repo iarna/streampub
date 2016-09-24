@@ -52,7 +52,12 @@ inherits(Streampub, Transform)
 Streampub.prototype._flush = function (done) {
   var self = this
   var pkg = []
-  pkg.push({_attr: {version: '3.0', 'unique-identifier': 'pub-id', 'xmlns': 'http://www.idpf.org/2007/opf'}})
+  pkg.push({_attr: {
+    version: '3.0',
+    'unique-identifier': 'pub-id',
+    'xmlns': 'http://www.idpf.org/2007/opf',
+    'prefix': 'foaf: http://xmlns.com/foaf/spec/'
+  }})
   pkg.push({metadata: self._generateMetadata()})
   pkg.push({manifest: self._generateManifest()})
   pkg.push({spine: self._generateSpine()})
@@ -143,6 +148,7 @@ Streampub.prototype._generateMetadata = function () {
   metadata.push({'meta': [{_attr: {property: 'dcterms:modified'}}, w3cdtc(this.meta.modified)]})
   if (this.meta.source) {
     metadata.push({'dc:source': this.meta.source})
+    metadata.push({'link': [{_attr: {href: this.meta.source, rel: 'foaf:homepage'}}]})
   }
   if (this.meta.author) {
     metadata.push({'dc:creator': [{_attr: {id: 'author'}}, this.meta.author]})

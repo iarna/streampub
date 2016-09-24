@@ -20,13 +20,17 @@ epub.end()
 
 *opts* is an object that optionally has the following properties:
 
+* *id* - Optional. A unique identifier for this work. Defaults to *source*, or if no source is passed either, a UUID. Note that URLs for
+  this field must be prefixed by "url:".
 * *title* - The title of the epub, defaults to "Untitled"
 * *author* - The name of the author of the epub
 * *modified* - When the epub was last modified, defaults to now. (Date object)
 * *published* - When the source material was published. (Date object)
-* *source* - The original URL or URN of the source material
+* *source* - The original URL or URN of the source material. "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."
 * *language* - The 2 digit language code of the material, defaults to "en".
-* *description* - A brief description or summary of the material
+* *description* - A brief description or summary of the material.
+* *publisher* - "An entity responsible for making the resource available."
+* *subject* - "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
 
 All of the options can be set after object creation with obvious setters:
 
@@ -37,6 +41,8 @@ All of the options can be set after object creation with obvious setters:
 ### epub.setSource(source)
 ### epub.setLanguage(language)
 ### epub.setDescription(description)
+### epub.setPublisher(publisher)
+### epub.setSubject(subject)
 
 ### The Streampub Object
 

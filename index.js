@@ -32,6 +32,7 @@ function Streampub (opts) {
   this.chapters = []
   this.files = []
   this.meta = {}
+  this.meta.id = opts.id
   this.meta.title = opts.title || 'Untitled'
   this.meta.author = opts.author
   this.setModified(opts.modified || new Date())
@@ -39,6 +40,8 @@ function Streampub (opts) {
   this.meta.source = opts.source
   this.meta.language = opts.language || 'en'
   this.meta.description = opts.description
+  this.meta.publisher = opts.publisher
+  this.meta.subject = opts.subject
   this.maxId = 0
   this.header = self.zip.entry('application/epub+zip', {name: 'mimetype'}).then(function () {
     return self.zip.entry(xml(container, {declaration: true}), {name: 'META-INF/container.xml'})
@@ -114,7 +117,12 @@ Streampub.prototype.setDescription = function (description) {
   this.meta.description = description
 }
 
-Streampub.prototype.finalize = function (cb) {
+Streampub.prototype.setPublisher = function (publisher) {
+  this.meta.publisher = publisher
+}
+
+Streampub.prototype.setSubject = function (subject) {
+  this.meta.subject = subject
 }
 
 function w3cdtc (date) {
@@ -128,11 +136,10 @@ function w3cdtc (date) {
 
 Streampub.prototype._generateMetadata = function () {
   var metadata = [{_attr: {'xmlns:dc': 'http://purl.org/dc/elements/1.1/'}}]
-  metadata.push({'dc:identifier': [{_attr: {id: 'pub-id'}}, 'url:uuid:' + uuid.v4()]})
-  metadata.push({'dc:identifier': [{_attr: {'opf:scheme': 'URL'}}, this.meta.source]})
+  var id = this.meta.id || 'url:' + this.meta.source || 'urn:uuid:' + uuid.v4()
+  metadata.push({'dc:identifier': [{_attr: {id: 'pub-id'}}, id]})
   metadata.push({'dc:language': this.meta.language})
   metadata.push({'dc:title': this.meta.title})
-
   metadata.push({'meta': [{_attr: {property: 'dcterms:modified'}}, w3cdtc(this.meta.modified)]})
   if (this.meta.source) {
     metadata.push({'dc:source': this.meta.source})
@@ -146,6 +153,12 @@ Streampub.prototype._generateMetadata = function () {
   }
   if (this.meta.published) {
     metadata.push({'dc:date': w3cdtc(this.meta.published)})
+  }
+  if (this.meta.publisher) {
+    metadata.push({'dc:publisher': this.meta.publisher})
+  }
+  if (this.meta.subject) {
+    metadata.push({'dc:subject': this.meta.subject})
   }
   return metadata
 }

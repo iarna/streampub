@@ -35,6 +35,7 @@ function Streampub (opts) {
   this.meta.id = opts.id
   this.meta.title = opts.title || 'Untitled'
   this.meta.author = opts.author
+  this.meta.authorUrl = opts.authorUrl
   this.setModified(opts.modified || new Date())
   if (opts.published) this.setPublished(opts.published)
   this.meta.source = opts.source
@@ -56,7 +57,8 @@ Streampub.prototype._flush = function (done) {
     version: '3.0',
     'unique-identifier': 'pub-id',
     'xmlns': 'http://www.idpf.org/2007/opf',
-    'prefix': 'foaf: http://xmlns.com/foaf/spec/'
+    'prefix': 'foaf: http://xmlns.com/foaf/spec/ ' +
+              'calibre: https://calibre-ebook.com'
   }})
   pkg.push({metadata: self._generateMetadata()})
   pkg.push({manifest: self._generateManifest()})
@@ -100,6 +102,10 @@ Streampub.prototype.setAuthor = function (author) {
   this.meta.author = author
 }
 
+Streampub.prototype.setAuthorUrl = function (authorUrl) {
+  this.meta.authorUrl = authorUrl
+}
+
 Streampub.prototype.setModified = function (modified) {
   if (!(modified instanceof Date)) modified = new Date(modified)
   this.meta.modified = modified
@@ -130,6 +136,10 @@ Streampub.prototype.setSubject = function (subject) {
   this.meta.subject = subject
 }
 
+Streampub.prototype.setAuthorUrl = function (authorUrl) {
+  this.meta.authorUrl = authorUrl
+}
+
 function w3cdtc (date) {
   try {
     return date.toISOString().replace(/[.]\d{1,3}Z/, 'Z')
@@ -153,6 +163,12 @@ Streampub.prototype._generateMetadata = function () {
   if (this.meta.author) {
     metadata.push({'dc:creator': [{_attr: {id: 'author'}}, this.meta.author]})
     metadata.push({'meta': [{_attr: {refines: '#author', property: 'role', scheme: 'marc:relators', id: 'role'}}, 'aut']})
+    if (this.meta.authorUrl) {
+      metadata.push({'link': [{_attr: {href: this.meta.authorUrl, rel: 'foaf:homepage', refines: '#author'}}]})
+      var authorMap = {}
+      authorMap[this.meta.author] = this.meta.authorUrl
+      metadata.push({'meta': [{_attr: {'property': 'calibre:author_link_map'}}, JSON.stringify(authorMap)]})
+    }
   }
   if (this.meta.description) {
     metadata.push({'dc:description': this.meta.description})

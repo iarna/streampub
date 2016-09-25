@@ -24,6 +24,9 @@ epub.end()
   this field must be prefixed by "url:".
 * *title* - The title of the epub, defaults to "Untitled"
 * *author* - The name of the author of the epub
+* **authorUrl** - Only used if an author name is used as
+  well.  Adds a related `foaf:homepage` link to the author record.  Also a
+  Calibre link_map, but as yet, Calibre seems unwilling to import this. Optional.
 * *modified* - When the epub was last modified, defaults to now. (Date object)
 * *published* - When the source material was published. (Date object)
 * *source* - The original URL or URN of the source material. "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."
@@ -36,6 +39,7 @@ All of the options can be set after object creation with obvious setters:
 
 ### epub.setTitle(title)
 ### epub.setAuthor(author)
+### epub.setAuthorUrl(authorUrl)
 ### epub.setModified(modified)
 ### epub.setPublished(published)
 ### epub.setSource(source)

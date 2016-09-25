@@ -12,6 +12,9 @@
     "writer"
   ],
   "author": "Rebecca Turner <me@re-becca.org> (http://re-becca.org/)",
+  "contributors": [
+    "Meinaart van Straalen <github@kayenta.nl> (https://github.com/meinaart)"
+  ],
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "htmltidy": "0.0.6",
+    "mime-types": "^2.1.12",
     "readable-stream": "^2.1.5",
     "uuid": "^2.0.2",
     "xml": "^1.0.1",

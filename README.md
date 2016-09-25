@@ -36,6 +36,7 @@ epub.end()
 
 All of the options can be set after object creation with obvious setters:
 
+* `epub.setId(id)`
 * `epub.setTitle(title)`
 * `epub.setAuthor(author)`
 * `epub.setAuthorUrl(author)`

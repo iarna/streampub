@@ -94,6 +94,10 @@ Streampub.prototype._transform = function (data, encoding, done) {
   })
 }
 
+Streampub.prototype.setId = function (id) {
+  this.meta.id = id
+}
+
 Streampub.prototype.setTitle = function (title) {
   this.meta.title = title
 }

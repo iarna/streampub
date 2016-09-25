@@ -20,33 +20,32 @@ epub.end()
 
 *opts* is an object that optionally has the following properties:
 
-* *id* - Optional. A unique identifier for this work. Defaults to *source*, or if no source is passed either, a UUID. Note that URLs for
-  this field must be prefixed by "url:".
-* *title* - The title of the epub, defaults to "Untitled"
-* *author* - The name of the author of the epub
-* **authorUrl** - Only used if an author name is used as
+* **id** _String_ - _Default: url:**source** or a UUID_ A unique identifier for this work. Note that URLs for this field must be prefixed by "url:".
+* **title** _String_ - _Default: "Untitled"_ The title of the epub.
+* **author** _String_ - _Optional_ The name of the author of the epub.
+* **authorUrl** _String_ - _Optional_ Only used if an author name is used as
   well.  Adds a related `foaf:homepage` link to the author record.  Also a
-  Calibre link_map, but as yet, Calibre seems unwilling to import this. Optional.
-* *modified* - When the epub was last modified, defaults to now. (Date object)
-* *published* - When the source material was published. (Date object)
-* *source* - The original URL or URN of the source material. "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."
-* *language* - The 2 digit language code of the material, defaults to "en".
-* *description* - A brief description or summary of the material.
-* *publisher* - "An entity responsible for making the resource available."
-* *subject* - "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
+  Calibre link_map, but as yet, Calibre seems unwilling to import this.
+* **modified** _Date_ - _Default: new Date()_ When the epub was last modified.
+* **published** _Date_ - _Optional_ When the source material was published.
+* **source** _String_ - _Optional_ The original URL or URN of the source material. "The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."
+* **language** _String_ - _Optional_ The 2 digit language code of the material, defaults to "en".
+* **description** _String_ - _Optional_ A brief description or summary of the material.
+* **publisher** _String_ - _Optional_ "An entity responsible for making the resource available."
+* **subject** _String_ - _Optional_ Calibre treats this field as a comma separated list of tag names. "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
 
 All of the options can be set after object creation with obvious setters:
 
-### epub.setTitle(title)
-### epub.setAuthor(author)
-### epub.setAuthorUrl(authorUrl)
-### epub.setModified(modified)
-### epub.setPublished(published)
-### epub.setSource(source)
-### epub.setLanguage(language)
-### epub.setDescription(description)
-### epub.setPublisher(publisher)
-### epub.setSubject(subject)
+* `epub.setTitle(title)`
+* `epub.setAuthor(author)`
+* `epub.setAuthorUrl(author)`
+* `epub.setModified(modified)`
+* `epub.setPublished(published)`
+* `epub.setSource(source)`
+* `epub.setLanguage(language)`
+* `epub.setDescription(description)`
+* `epub.setPublisher(publisher)`
+* `epub.setSubject(subject)`
 
 ### The Streampub Object
 
@@ -56,16 +55,22 @@ can pipe into it or write to it and call `.end()` when you're done.
 
 ### var epub.write(*obj*, *callback*)
 
-This is the usual stream write function. The object must have the following keys:
+This is the usual stream write function. The object can either be constructed with:
 
-* **chapterName** - The name of the chapter in the index.
-* **content** - The HTML content of this chapter.  This will be passed
+```
+Streampub.newChapter(chapterName, content, index, fileName)
+```
+
+Or by hand by creating an object with the following keys:
+
+* **chapterName** _String_ - _Required_ The name of the chapter in the index.
+* **content** _String_ - _Required_ The HTML content of this chapter.  This will be passed
   through `htmltidy` in order to make it valid XHTML.
-* **index** - *(optional)* Where the chapter should show up in the index. These numbers
+* **index** _Number_ - _Optional_ Where the chapter should show up in the index. These numbers
   can have gaps and are used for ordering ONLY. Duplicate index values will
   result in the earlier chapter being excluded from the index. If not specified will
   be added after any where it _was_ specified, in the order written.
-* **fileName** - *(optional)* The filename to use *inside* the epub. This only matters if
+* **fileName** _String_ - _Optional_ The filename to use *inside* the epub. This only matters if
   you want to do links between chapters. This should end in `.xhtml`.
 
 `htmltidy` options used are:

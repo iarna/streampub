@@ -128,7 +128,7 @@ Streampub.prototype._transform = function (data, encoding, done) {
     self.hasCover = true
   }
 
-  var contentIsStream = data.content instanceof stream.Readable
+  var contentIsStream = data.content instanceof stream.Stream
   var sourceFilename = contentIsStream && typeof data.content.path === 'string' ? path.basename(data.content.path) : undefined
 
   data.fileName = data.fileName ||

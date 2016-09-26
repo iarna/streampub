@@ -1,4 +1,5 @@
 * In `stream.newFile`: Make filename optional when content is a stream.
+* Improve documentation around producing objects for Streampub to consume.
 
 # v1.2.0 (2016-09-25)
 

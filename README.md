@@ -68,45 +68,23 @@ Streampub.newFile(fileName, content, mime)
 Or by hand by creating an object with the following keys:
 * **id** _String_ - _Optional_ Internal ID of object, if omited `streampub` will generate one.
 * **chapterName** _String_ - _Required_ The name of the chapter in the index.
-* **content** _String_ or _stream.Readable_ - _Required_ The HTML content of this chapter.  This will be passed
-  through `htmltidy` in order to make it valid XHTML.
+* **content** _String_ or _stream.Readable_ - _Required_ The content of item being added. If this is HTML then
+  it will be run through `htmltidy` to make it valid XHTML. See `htmltidy options` below for details.
 * **index** _Number_ - _Optional_ Where the chapter should show up in the index. These numbers
   can have gaps and are used for ordering ONLY. Duplicate index values will
   result in the earlier chapter being excluded from the index. If not specified will
   be added after any where it _was_ specified, in the order written.
-* **fileName** _String_ - _Optional_ The filename to use *inside* the epub. This only matters if
-  you want to do links between chapters. This should end in `.xhtml`.
+* **fileName** _String_ - _Optional_ The filename to use *inside* the epub. For chapters this is only needed
+  if you want to inter-chapter linking. Uses are more obvious for CSS and images. If content is an `fs` stream
+  then this will default to a value inferred from the original filename.
 * **index** _Number_ - _Optional_ Where the chapter should show up in the index. These numbers
   can have gaps and are used for ordering ONLY. Duplicate index values will
   result in the earlier chapter being excluded from the index. If not specified will
   be added after any where it _was_ specified, in the order written.
 * **mime** _String_ - _Optional_ Mimetype of content, if not supplied `streampub` will try to determine type.
 
-##### htmltidy options
-`htmltidy` options used are:
-
-```
-    'output-xhtml': true,
-    'doctype': 'html5',
-    'add-xml-decl': true,
-    'coerce-endtags': true,
-    'enclose-block-text': true,
-    'drop-proprietary-attributes': true,
-    'strict-tags-attributes': true,
-    'clean': true,
-    'quote-nbsp': false,
-    'numeric-entities': true
-```
-
-#### Adding other type of assets
-You can add other types of files to the epub. For example images or stylesheets.
-
-Object keys:
-* **fileName** _String_ - _Optional_ The filename to use *inside* the epub,
-                required when `content` is not a readable stream.
-* **content** _String_ or _stream.Readable_ - _Required_ Content as string, or stream with content.
-
 #### Example
+
 ```
 var Streampub = require('./index')
 var fs = require('fs')
@@ -114,7 +92,7 @@ var fs = require('fs')
 var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example author')
 epub.pipe(fs.createWriteStream('example.epub'))
-epub.write(Streampub.newFile('author.jpg', fs.createReadStream('author.jpg')))
+epub.write(Streampub.newFile(fs.createReadStream('author.jpg')))
 epub.write(Streampub.newFile('stylesheet.css', fs.createReadStream('styles.css')})
 epub.write(Streampub.newChapter('Chapter 1', '<h1>Chapter 1</h1><b>doc content</b>'))
 epub.write(Streampub.newChapter('Chapter 2', '<h1>Chapter 2</h1><b>doc content</b>'))
@@ -169,6 +147,22 @@ epub.write({id: 'cover-image', content: fs.createReadStream('cover.jpg')})
 epub.write({chapterName: 'Chapter 1', content: '<h1>Chapter 1</h1><b>doc content</b>'})
 epub.write({chapterName: 'Chapter 2', content: '<h1>Chapter 2</h1><b>doc content</b>'})
 epub.end()
+```
+
+##### htmltidy options
+`htmltidy` options used are:
+
+```
+    'output-xhtml': true,
+    'doctype': 'html5',
+    'add-xml-decl': true,
+    'coerce-endtags': true,
+    'enclose-block-text': true,
+    'drop-proprietary-attributes': true,
+    'strict-tags-attributes': true,
+    'clean': true,
+    'quote-nbsp': false,
+    'numeric-entities': true
 ```
 
 ## VALIDATION

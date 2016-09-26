@@ -1,3 +1,5 @@
+* In `stream.newFile`: Make filename optional when content is a stream.
+
 # v1.2.0 (2016-09-25)
 
 * Added changelog ([@meinaart](https://github.com/meinaart))

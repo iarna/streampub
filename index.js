@@ -99,6 +99,11 @@ function CoverImage (content, mime) {
 }
 
 function File (fileName, content, mime) {
+  if (fileName instanceof stream.Stream) {
+    mime = content
+    content = fileName
+    fileName = null
+  }
   return {content: content, fileName: fileName, mime: mime}
 }
 

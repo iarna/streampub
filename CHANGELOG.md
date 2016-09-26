@@ -1,3 +1,5 @@
+# v1.2.0 (2016-09-25)
+
 * Added changelog ([@meinaart](https://github.com/meinaart))
 * Added support for adding files/assets (for example images or stylesheets) ([@meinaart](https://github.com/meinaart))
 * Support for cover image ([@meinaart](https://github.com/meinaart))

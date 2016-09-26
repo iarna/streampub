@@ -3,7 +3,6 @@ module.exports = normalizeXHTML
 var Bluebird = require('bluebird')
 var tidy = Bluebird.promisify(require('htmltidy').tidy)
 
-
 var tidyOpt = {
   'output-xhtml': true,
   'doctype': 'html5',

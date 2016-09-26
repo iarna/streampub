@@ -11,7 +11,7 @@ var fs = require('fs')
 var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example User')
 epub.pipe(fs.createWriteStream('example.epub'))
-epub.write({index: 0, chapterName: 'Chapter 1', fileName: 'chapter-1.xhtml', content: '<b>doc content</b>'})
+epub.write(Streampub.newChapter('Chapter 1', 'chapter-1.xhtml', '<b>doc content</b>', 0))
 epub.end()
 ```
 

@@ -1,3 +1,4 @@
+* Author URLs are now included in such a way that Calibre will import them
 * In `stream.newFile`: Make filename optional when content is a stream.
 * Improve documentation around producing objects for Streampub to consume.
 

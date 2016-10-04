@@ -1,6 +1,6 @@
 {
   "name": "streampub",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A streaming EPUB3 writer/generator.",
   "main": "index.js",
   "scripts": {

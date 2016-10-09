@@ -157,8 +157,10 @@ Streampub.prototype._transform = function (data, encoding, done) {
         self._injectCover(done)
       }
     }).catch(done)
-  } else {
+  } else if (data.mime === MIME_XHTML) {
     normalizeXHTML(data.content).catch(done).then(addContent).finally(done)
+  } else {
+    addContent(data.content).finally(done)
   }
 }
 

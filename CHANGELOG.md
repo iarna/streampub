@@ -1,3 +1,4 @@
+* Only pass content through normalizeXHTML if it has an XHTML mimetype.
 * Allow zero as an index order value.
 
 # v1.3.0 (2016-10-04)

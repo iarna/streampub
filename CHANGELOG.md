@@ -1,3 +1,5 @@
+* Allow zero as an index order value.
+
 # v1.3.0 (2016-10-04)
 
 * Author URLs are now included in such a way that Calibre will import them

@@ -124,7 +124,7 @@ Streampub.prototype._injectCover = function (cb) {
 Streampub.prototype._transform = function (data, encoding, done) {
   var self = this
   var id = data.id || ++self.maxId
-  var index = data.index || (100000 + id)
+  var index = data.index == null ? (100000 + id) : data.index
 
   if (data.id === TYPE_COVER_IMAGE) {
     self.hasCoverImage = true

@@ -117,7 +117,8 @@ Streampub.prototype._injectCover = function (cb) {
     content:
       '<html><head><title>' + title + '</title></head><body style="margin: 0; padding: 0;">' +
       '<img src="' + FILENAME_COVER_IMAGE + '" style="max-width: 100%; oeb-column-number:1;">' +
-      '</body></html>'
+      '</body></html>',
+    index: -1
   }, 'utf8', cb)
 }
 
@@ -145,7 +146,7 @@ Streampub.prototype._transform = function (data, encoding, done) {
     if (data.chapterName) {
       self.chapters[index] = {index: index, chapterName: data.chapterName, fileName: data.fileName}
     }
-    self.files.push({chapterName: data.chapterName, fileName: data.fileName, mime: data.mime, id: data.id || 'file' + id})
+    self.files.push({chapterName: data.chapterName, fileName: data.fileName, mime: data.mime, id: data.id || 'file' + id, order: index})
     return self.header.then(function () {
       return self.zip.entry(content, {name: 'OEBPS/' + data.fileName})
     })
@@ -259,13 +260,23 @@ Streampub.prototype._generateMetadata = function () {
   return metadata
 }
 
+function cmp (aa, bb) {
+  if (aa > bb) return 1
+  if (bb > aa) return -1
+  return 0
+}
+
+function fileOrder (aa, bb) {
+  return cmp((aa.order||0), (bb.order||0)) || cmp(aa.id, bb.id)
+}
+
 Streampub.prototype._generateManifest = function () {
   var manifest = []
   // epub2: <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml" />
   // epub3: <item href="toc.xhtml" id="nav" properties="nav" media-type: "application/xhtml+xml" />
   var item
   manifest.push({'item': [{_attr: {id: 'nav', href: 'toc.xhtml', properties: 'nav', 'media-type': MIME_XHTML}}]})
-  this.files.forEach(function (file) {
+  this.files.sort(fileOrder).forEach(function (file) {
     item = {'item': [{_attr: {id: file.id, href: file.fileName, 'media-type': file.mime}}]}
     if (file.id === TYPE_COVER_IMAGE) {
       manifest.unshift(item)
@@ -278,7 +289,7 @@ Streampub.prototype._generateManifest = function () {
 
 Streampub.prototype._generateSpine = function () {
   var spine = []
-  this.files.forEach(function (file) {
+  this.files.sort(fileOrder).forEach(function (file) {
     if (file.chapterName) {
       spine.push({'itemref': [{_attr: {idref: file.id}}]})
     } else if (file.id === TYPE_COVER) {

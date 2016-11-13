@@ -1,3 +1,8 @@
+# v1.4.1 (2016-11-13)
+
+* Fix bug that was causing browsing order to not match table of contents
+  order if chapters were added out-of-order.
+
 # v1.4.0 (2016-10-09)
 
 * Only pass content through normalizeXHTML if it has an XHTML mimetype.

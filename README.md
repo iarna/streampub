@@ -66,6 +66,7 @@ Streampub.newFile(fileName, content, mime)
 ```
 
 Or by hand by creating an object with the following keys:
+
 * **id** _String_ - _Optional_ Internal ID of object, if omited `streampub` will generate one.
 * **chapterName** _String_ - _Required_ The name of the chapter in the index.
 * **content** _String_ or _stream.Readable_ - _Required_ The content of item being added. If this is HTML then
@@ -82,6 +83,8 @@ Or by hand by creating an object with the following keys:
   result in the earlier chapter being excluded from the index. If not specified will
   be added after any where it _was_ specified, in the order written.
 * **mime** _String_ - _Optional_ Mimetype of content, if not supplied `streampub` will try to determine type.
+
+*If you include indexes then you can add chapters in any order.*
 
 #### Example
 

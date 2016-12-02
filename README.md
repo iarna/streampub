@@ -161,8 +161,6 @@ epub.end()
     'add-xml-decl': true,
     'coerce-endtags': true,
     'enclose-block-text': true,
-    'drop-proprietary-attributes': true,
-    'strict-tags-attributes': true,
     'clean': true,
     'quote-nbsp': false,
     'numeric-entities': true

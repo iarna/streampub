@@ -1,3 +1,7 @@
+# v1.4.3 (2016-12-02)
+
+* Allow "proprietary" attributes through. `epub` prefixed attributes count as proprietary.
+
 # v1.4.2 (2016-12-01)
 
 * Include items in the spine on the basis of mime-type not chapter name.

@@ -1,3 +1,9 @@
+# v1.4.2 (2016-12-01)
+
+* Include items in the spine on the basis of mime-type not chapter name.
+  This let's us have HTML pages that aren't in the index but ARE in the
+  spine.
+
 # v1.4.1 (2016-11-13)
 
 * Fix bug that was causing browsing order to not match table of contents

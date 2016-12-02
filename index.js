@@ -290,10 +290,10 @@ Streampub.prototype._generateManifest = function () {
 Streampub.prototype._generateSpine = function () {
   var spine = []
   this.files.sort(fileOrder).forEach(function (file) {
-    if (file.chapterName) {
-      spine.push({'itemref': [{_attr: {idref: file.id}}]})
-    } else if (file.id === TYPE_COVER) {
+    if (file.id === TYPE_COVER) {
       spine.unshift({'itemref': [{_attr: {idref: file.id, linear: 'no'}}]})
+    } else if (file.mime === MIME_XHTML) {
+      spine.push({'itemref': [{_attr: {idref: file.id}}]})
     }
   })
   return spine

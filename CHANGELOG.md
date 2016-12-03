@@ -1,3 +1,8 @@
+# v1.5.0 (2016-12-02)
+
+* Add support for manually numbered tables of contents and generation of
+  table of contents pages.
+
 # v1.4.3 (2016-12-02)
 
 * Allow "proprietary" attributes through. `epub` prefixed attributes count as proprietary.

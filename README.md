@@ -34,6 +34,8 @@ epub.end()
 * **description** _String_ - _Optional_ A brief description or summary of the material.
 * **publisher** _String_ - _Optional_ "An entity responsible for making the resource available."
 * **subject** _String_ - _Optional_ Calibre treats this field as a comma separated list of tag names. "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
+* **includeTOC** _Boolean_ - If true, generate a separate Table of Contents page distinct from the one the ereader uses for navigation.
+* **numberTOC** _Boolean_ - If true, suppress the `ol` based list numbering and put our own as text. Necessary to have numbers in front of each TOC entry with most readers.
 
 All of the options can be set after object creation with obvious setters:
 

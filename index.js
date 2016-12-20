@@ -10,6 +10,9 @@ var normalizeXHTML = require('./normalize-xhtml.js')
 var mime = require('mime-types')
 var stream = require('stream')
 var path = require('path')
+var identifyStream = require('buffer-signature').identifyStream
+var identifyBuffer = require('buffer-signature').identify
+var concatStream = require('concat-stream')
 
 module.exports = Streampub
 module.exports.newChapter = Chapter
@@ -165,15 +168,37 @@ Streampub.prototype._transform = function (data, encoding, done) {
     })
   }
 
+  function setMimeType (info) {
+    if (info.unknown) return
+    data.mime = info.mimeType
+  }
+
   if (contentIsStream) {
-    addContent(data.content).then(function () {
-      if (self.hasCoverImage && !self.hasCover) {
-        self._injectCover(done)
-      }
-    }).catch(done)
+    // we don't actually support streaming XHTML as we don't support
+    // normalizing an XHTML stream, so concat it up and then treat it as
+    // normal.
+    if (data.mime === MIME_XHTML) {
+      var errored = false
+      data.content.on('error', function (err) {
+        done(err)
+        errored = true
+      }).pipe(concatStream(function (content) {
+        if (errored) return
+        normalizeXHTML(content).catch(done).then(addContent).finally(done)
+      }))
+    } else {
+      addContent(data.content.pipe(identifyStream(setMimeType))).then(function () {
+        if (self.hasCoverImage && !self.hasCover) {
+          self._injectCover(done)
+        } else {
+          done()
+        }
+      }).catch(done)
+    }
   } else if (data.mime === MIME_XHTML) {
     normalizeXHTML(data.content).catch(done).then(addContent).finally(done)
   } else {
+    setMimeType(identifyBuffer(data.content))
     addContent(data.content).finally(done)
   }
 }
@@ -280,7 +305,7 @@ function cmp (aa, bb) {
 }
 
 function fileOrder (aa, bb) {
-  return cmp((aa.order||0), (bb.order||0)) || cmp(aa.id, bb.id)
+  return cmp((aa.order || 0), (bb.order || 0)) || cmp(aa.id, bb.id)
 }
 
 Streampub.prototype._generateManifest = function () {

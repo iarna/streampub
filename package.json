@@ -26,6 +26,8 @@
   "homepage": "https://github.com/iarna/streampub",
   "dependencies": {
     "bluebird": "^3.4.6",
+    "buffer-signature": "^1.0.0",
+    "concat-stream": "^1.6.0",
     "htmltidy": "0.0.6",
     "mime-types": "^2.1.12",
     "readable-stream": "^2.1.5",

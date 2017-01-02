@@ -72,7 +72,7 @@ Or by hand by creating an object with the following keys:
 * **id** _String_ - _Optional_ Internal ID of object, if omited `streampub` will generate one.
 * **chapterName** _String_ - _Required_ The name of the chapter in the index.
 * **content** _String_ or _stream.Readable_ - _Required_ The content of item being added. If this is HTML then
-  it will be run through `htmltidy` to make it valid XHTML. See `htmltidy options` below for details.
+  it will be run through `parse5` and `xmlserializer` to make it valid XHTML.
 * **index** _Number_ - _Optional_ Where the chapter should show up in the index. These numbers
   can have gaps and are used for ordering ONLY. Duplicate index values will
   result in the earlier chapter being excluded from the index. If not specified will
@@ -152,20 +152,6 @@ epub.write({id: 'cover-image', content: fs.createReadStream('cover.jpg')})
 epub.write({chapterName: 'Chapter 1', content: '<h1>Chapter 1</h1><b>doc content</b>'})
 epub.write({chapterName: 'Chapter 2', content: '<h1>Chapter 2</h1><b>doc content</b>'})
 epub.end()
-```
-
-##### htmltidy options
-`htmltidy` options used are:
-
-```
-    'output-xhtml': true,
-    'doctype': 'html5',
-    'add-xml-decl': true,
-    'coerce-endtags': true,
-    'enclose-block-text': true,
-    'clean': true,
-    'quote-nbsp': false,
-    'numeric-entities': true
 ```
 
 ## VALIDATION

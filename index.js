@@ -249,6 +249,14 @@ Streampub.prototype.setSubject = function (subject) {
   this.meta.subject = subject
 }
 
+Streampub.prototype.setIncludeTOC = function (includeTOC) {
+  this.includeTOC = includeTOC
+}
+
+Streampub.prototype.setNumberTOC = function (numberTOC) {
+  this.numberTOC = numberTOC
+}
+
 function w3cdtc (date) {
   try {
     return date.toISOString().replace(/[.]\d{1,3}Z/, 'Z')

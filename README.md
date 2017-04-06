@@ -50,6 +50,8 @@ All of the options can be set after object creation with obvious setters:
 * `epub.setDescription(description)`
 * `epub.setPublisher(publisher)`
 * `epub.setSubject(subject)`
+* `epub.setIncudeTOC(includeTOC)`
+* `epub.setNumberTOC(numberTOC)`
 
 ### The Streampub Object
 

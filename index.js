@@ -57,6 +57,7 @@ function Streampub (opts) {
   this.meta.description = opts.description
   this.meta.publisher = opts.publisher
   this.meta.subject = opts.subject
+  this.meta.calibre = opts.calibre
   this.numberTOC = opts.numberTOC
   this.includeTOC = opts.includeTOC
   this.maxId = 0
@@ -257,6 +258,10 @@ Streampub.prototype.setNumberTOC = function (numberTOC) {
   this.numberTOC = numberTOC
 }
 
+Streampub.prototype.setCalibre = function (calibre) {
+  this.meta.calibre = calibre
+}
+
 function w3cdtc (date) {
   try {
     return date.toISOString().replace(/[.]\d{1,3}Z/, 'Z')
@@ -299,6 +304,13 @@ Streampub.prototype._generateMetadata = function () {
   }
   if (this.meta.subject) {
     metadata.push({'dc:subject': this.meta.subject})
+  }
+  if (this.meta.calibre) {
+    var self = this
+    Object.keys(this.meta.calibre).forEach(function (name) {
+      if (!self.meta.calibre[name]) return
+      metadata.push({'meta': [{_attr: {name: 'calibre:user_metadata:#' + name, content: JSON.stringify(self.meta.calibre[name])}}]})
+    })
   }
   return metadata
 }

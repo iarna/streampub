@@ -36,6 +36,20 @@ epub.end()
 * **subject** _String_ - _Optional_ Calibre treats this field as a comma separated list of tag names. "Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
 * **includeTOC** _Boolean_ - If true, generate a separate Table of Contents page distinct from the one the ereader uses for navigation.
 * **numberTOC** _Boolean_ - If true, suppress the `ol` based list numbering and put our own as text. Necessary to have numbers in front of each TOC entry with most readers.
+* **calibre** _Object_ - _Optional_ If set, an object containing Calibre user fields which will be filled in on import to Calibre.
+
+A note on the calibre object: The format of this object requires a little
+discussion.  In order for Calibre to import into a custom filed you have to
+provide both a matching name and a matching type.  This is best explained
+via example.  For our example, let's assume you have a Calibre field named
+`#words` that contains the number of words in a work.  To make that
+available to Calibre you'd pass in an object like:
+
+```
+{words: {'#value#': wordCount, datatype: 'int'}}
+```
+
+Other useful datatypes are `text` and `enumeration`.
 
 All of the options can be set after object creation with obvious setters:
 
@@ -52,6 +66,7 @@ All of the options can be set after object creation with obvious setters:
 * `epub.setSubject(subject)`
 * `epub.setIncudeTOC(includeTOC)`
 * `epub.setNumberTOC(numberTOC)`
+* `epub.setCalibre(calibre)`
 
 ### The Streampub Object
 

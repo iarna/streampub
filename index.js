@@ -275,9 +275,6 @@ Streampub.prototype._generateMetadata = function () {
     metadata.push({'meta': [{_attr: {'property': 'file-as', refines: '#author'}}, this.meta.author]})
     if (this.meta.authorUrl) {
       metadata.push({'link': [{_attr: {href: this.meta.authorUrl, rel: 'foaf:homepage', refines: '#author'}}]})
-      var authorMap = {}
-      authorMap[this.meta.author] = this.meta.authorUrl
-      metadata.push({'meta': [{_attr: {'property': 'calibre:author_link_map'}}, JSON.stringify(authorMap)]})
     }
   }
   if (this.meta.description) {

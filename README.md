@@ -11,7 +11,7 @@ var fs = require('fs')
 var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example User')
 epub.pipe(fs.createWriteStream('example.epub'))
-epub.write(Streampub.newChapter('Chapter 1', 'chapter-1.xhtml', '<b>doc content</b>', 0))
+epub.write(Streampub.newChapter('Chapter 1', '<b>doc content</b>', 0, 'chapter-1.xhtml'))
 epub.end()
 ```
 
@@ -97,10 +97,6 @@ Or by hand by creating an object with the following keys:
 * **fileName** _String_ - _Optional_ The filename to use *inside* the epub. For chapters this is only needed
   if you want to inter-chapter linking. Uses are more obvious for CSS and images. If content is an `fs` stream
   then this will default to a value inferred from the original filename.
-* **index** _Number_ - _Optional_ Where the chapter should show up in the index. These numbers
-  can have gaps and are used for ordering ONLY. Duplicate index values will
-  result in the earlier chapter being excluded from the index. If not specified will
-  be added after any where it _was_ specified, in the order written.
 * **mime** _String_ - _Optional_ Mimetype of content, if not supplied `streampub` will try to determine type.
 
 *If you include indexes then you can add chapters in any order.*

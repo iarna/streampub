@@ -5,7 +5,7 @@ A streaming EPUB3 writer.
 
 ## EXAMPLE
 
-```
+```js
 var Streampub = require('streampub')
 var fs = require('fs')
 var epub = new Streampub({title: 'My Example'})
@@ -45,7 +45,7 @@ via example.  For our example, let's assume you have a Calibre field named
 `#words` that contains the number of words in a work.  To make that
 available to Calibre you'd pass in an object like:
 
-```
+```js
 {words: {'#value#': wordCount, datatype: 'int'}}
 ```
 
@@ -78,7 +78,7 @@ can pipe into it or write to it and call `.end()` when you're done.
 
 This is the usual stream write function. The object can either be constructed with:
 
-```
+```js
 Streampub.newChapter(chapterName, content, index, fileName, mime)
 Streampub.newCoverImage(content, mime)
 Streampub.newFile(fileName, content, mime)
@@ -103,7 +103,7 @@ Or by hand by creating an object with the following keys:
 
 #### Example
 
-```
+```js
 var Streampub = require('./index')
 var fs = require('fs')
 
@@ -119,7 +119,7 @@ epub.end()
 
 or equivalently
 
-```
+```js
 var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example author')
 epub.pipe(fs.createWriteStream('example.epub'))
@@ -137,7 +137,7 @@ The epub specification does not contain a standarized way to include book covers
 ### Example
 
 
-```
+```js
 var Streampub = require('./index')
 var fs = require('fs')
 
@@ -153,7 +153,7 @@ epub.end()
 
 or equivalently
 
-```
+```js
 var Streampub = require('./index')
 var fs = require('fs')
 

@@ -79,6 +79,9 @@ Streampub.prototype._flush = function (done) {
     toZip.push([xml([{html: self._generateTOC()}], {declaration: true}), {name: 'OEBPS/toc.xhtml'}])
   }
 
+  this.files.push({fileName: 'toc.ncx', id: 'ncx', order: -2, mime: 'application/x-dtbncx+xml'})
+  toZip.push([self._generateVersion2TOC(), {name: 'OEBPS/toc.ncx'}])
+
   var pkg = []
   pkg.push({_attr: {
     version: '3.0',
@@ -343,7 +346,7 @@ Streampub.prototype._generateManifest = function () {
 }
 
 Streampub.prototype._generateSpine = function () {
-  var spine = []
+  var spine = [{_attr: {toc: 'ncx'}}]
   this.files.sort(fileOrder).forEach(function (file) {
     if (file.id === TYPE_COVER) {
       spine.unshift({'itemref': [{_attr: {idref: file.id, linear: 'no'}}]})
@@ -377,4 +380,40 @@ Streampub.prototype._generateTOC = function (numberTOC) {
     ol.push({'li': chapterLine})
   })
   return html
+}
+
+Streampub.prototype._generateVersion2TOC = function () {
+  let inner = [{
+    _attr: {
+      xmlns: 'http://www.daisy.org/z3986/2005/ncx/',
+      version: '2005-1'
+    }
+  }]
+  inner.push({
+    head: [
+      {meta: {_attr: {name: 'dtb:uid', content: ''}}},
+      {meta: {_attr: {name: 'dtb:depth', content: '1'}}},
+      {meta: {_attr: {name: 'dtb:totalPageCount', content: '0'}}},
+      {meta: {_attr: {name: 'dtb:maxPageNumber', content: '0'}}}
+    ]
+  })
+  inner.push({
+    docTitle: [
+      {text: this.meta.title}
+    ]
+  })
+  let i = 0
+  inner.push({
+    navMap: this.chapters.map((chapter) => ({
+      navPoint: [
+        {_attr: {id: 'navpoint' + (++i), playOrder: i}},
+        {navLabel: [{text: chapter.chapterName}]},
+        {content: {_attr: {src: chapter.fileName}}}
+      ]
+    }))
+  })
+  let decl = (
+    '<?xml version="1.0" encoding="UTF-8" ?>\n'
+  )
+  return decl + xml({ncx: inner}, {indent: '  '})
 }

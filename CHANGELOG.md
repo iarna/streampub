@@ -1,3 +1,23 @@
+# v1.9.0 (2017-12-13)
+
+* A bunch of README improvements and fixes thanks to [@ari7](https://github.com/ari7)!
+* Support for EPUB v2 compatible TOCs, again thanks to [@ari7](https://github.com/ari7)!
+
+# v1.8.0 (2017-04-06)
+
+* Add support for optionally passing through calibre metadata
+* Add setters for includeTOC and numberTOC
+* Stop exporting a calibre authormap.  While calibre generates this, it does
+  not import it and will not (according to the authors of calibre).
+
+# v1.7.0 (2017-01-02)
+
+* Ditch `htmltidy` as it has C requirements.
+
+# v1.6.0 (2016-12-20)
+
+* Detect mime-types based on content
+
 # v1.5.0 (2016-12-02)
 
 * Add support for manually numbered tables of contents and generation of

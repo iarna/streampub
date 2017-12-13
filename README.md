@@ -5,13 +5,13 @@ A streaming EPUB3 writer.
 
 ## EXAMPLE
 
-```
+```js
 var Streampub = require('streampub')
 var fs = require('fs')
 var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example User')
 epub.pipe(fs.createWriteStream('example.epub'))
-epub.write(Streampub.newChapter('Chapter 1', 'chapter-1.xhtml', '<b>doc content</b>', 0))
+epub.write(Streampub.newChapter('Chapter 1', '<b>doc content</b>', 0, 'chapter-1.xhtml'))
 epub.end()
 ```
 
@@ -45,7 +45,7 @@ via example.  For our example, let's assume you have a Calibre field named
 `#words` that contains the number of words in a work.  To make that
 available to Calibre you'd pass in an object like:
 
-```
+```js
 {words: {'#value#': wordCount, datatype: 'int'}}
 ```
 
@@ -78,7 +78,7 @@ can pipe into it or write to it and call `.end()` when you're done.
 
 This is the usual stream write function. The object can either be constructed with:
 
-```
+```js
 Streampub.newChapter(chapterName, content, index, fileName, mime)
 Streampub.newCoverImage(content, mime)
 Streampub.newFile(fileName, content, mime)
@@ -97,17 +97,13 @@ Or by hand by creating an object with the following keys:
 * **fileName** _String_ - _Optional_ The filename to use *inside* the epub. For chapters this is only needed
   if you want to inter-chapter linking. Uses are more obvious for CSS and images. If content is an `fs` stream
   then this will default to a value inferred from the original filename.
-* **index** _Number_ - _Optional_ Where the chapter should show up in the index. These numbers
-  can have gaps and are used for ordering ONLY. Duplicate index values will
-  result in the earlier chapter being excluded from the index. If not specified will
-  be added after any where it _was_ specified, in the order written.
 * **mime** _String_ - _Optional_ Mimetype of content, if not supplied `streampub` will try to determine type.
 
 *If you include indexes then you can add chapters in any order.*
 
 #### Example
 
-```
+```js
 var Streampub = require('./index')
 var fs = require('fs')
 
@@ -115,7 +111,7 @@ var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example author')
 epub.pipe(fs.createWriteStream('example.epub'))
 epub.write(Streampub.newFile(fs.createReadStream('author.jpg')))
-epub.write(Streampub.newFile('stylesheet.css', fs.createReadStream('styles.css')})
+epub.write(Streampub.newFile('stylesheet.css', fs.createReadStream('styles.css')))
 epub.write(Streampub.newChapter('Chapter 1', '<h1>Chapter 1</h1><b>doc content</b>'))
 epub.write(Streampub.newChapter('Chapter 2', '<h1>Chapter 2</h1><b>doc content</b>'))
 epub.end()
@@ -123,7 +119,7 @@ epub.end()
 
 or equivalently
 
-```
+```js
 var epub = new Streampub({title: 'My Example'})
 epub.setAuthor('Example author')
 epub.pipe(fs.createWriteStream('example.epub'))
@@ -141,7 +137,7 @@ The epub specification does not contain a standarized way to include book covers
 ### Example
 
 
-```
+```js
 var Streampub = require('./index')
 var fs = require('fs')
 
@@ -157,7 +153,7 @@ epub.end()
 
 or equivalently
 
-```
+```js
 var Streampub = require('./index')
 var fs = require('fs')
 

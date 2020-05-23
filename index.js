@@ -89,7 +89,7 @@ Streampub.prototype._flush = function (done) {
     'unique-identifier': 'pub-id',
     'xmlns': 'http://www.idpf.org/2007/opf',
     'prefix': 'foaf: http://xmlns.com/foaf/spec/ ' +
-              'calibre: https://calibre-ebook.com' +
+              'calibre: https://calibre-ebook.com ' +
               'ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/'
   }})
   pkg.push({metadata: self._generateMetadata()})
@@ -318,7 +318,7 @@ Streampub.prototype._generateMetadata = function () {
     })
   }
   if (this.meta.ibooksSpecifiedFonts) {
-    metadata.push({'meta': [{_attr: {"ibooks:specified-fonts": 'true'}}]})
+    metadata.push({'meta': [{_attr: {property: "ibooks:specified-fonts"}}, "true"]})
   }
   return metadata
 }

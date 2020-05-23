@@ -58,6 +58,7 @@ function Streampub (opts) {
   this.meta.publisher = opts.publisher
   this.meta.subject = opts.subject
   this.meta.calibre = opts.calibre
+  this.meta.ibooksSpecifiedFonts = opts.ibooksSpecifiedFonts
   this.numberTOC = opts.numberTOC
   this.includeTOC = opts.includeTOC
   this.maxId = 0
@@ -88,7 +89,8 @@ Streampub.prototype._flush = function (done) {
     'unique-identifier': 'pub-id',
     'xmlns': 'http://www.idpf.org/2007/opf',
     'prefix': 'foaf: http://xmlns.com/foaf/spec/ ' +
-              'calibre: https://calibre-ebook.com'
+              'calibre: https://calibre-ebook.com ' +
+              'ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/'
   }})
   pkg.push({metadata: self._generateMetadata()})
   pkg.push({manifest: self._generateManifest()})
@@ -314,6 +316,9 @@ Streampub.prototype._generateMetadata = function () {
       if (!self.meta.calibre[name]) return
       metadata.push({'meta': [{_attr: {name: 'calibre:user_metadata:#' + name, content: JSON.stringify(self.meta.calibre[name])}}]})
     })
+  }
+  if (this.meta.ibooksSpecifiedFonts) {
+    metadata.push({'meta': [{_attr: {property: "ibooks:specified-fonts"}}, "true"]})
   }
   return metadata
 }

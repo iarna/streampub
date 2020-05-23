@@ -37,6 +37,8 @@ epub.end()
 * **includeTOC** _Boolean_ - If true, generate a separate Table of Contents page distinct from the one the ereader uses for navigation.
 * **numberTOC** _Boolean_ - If true, suppress the `ol` based list numbering and put our own as text. Necessary to have numbers in front of each TOC entry with most readers.
 * **calibre** _Object_ - _Optional_ If set, an object containing Calibre user fields which will be filled in on import to Calibre.
+* **ibooksSpecifiedFonts** _Boolean_ - _Optional_ If true, adds the metadata for an Apple iBooks [to declare an "original" theme](https://github.com/JayPanoz/Soma/wiki/How-to-embed-fonts#ibooks-meta) which reverts back to your initial fonts.
+
 
 A note on the calibre object: The format of this object requires a little
 discussion.  In order for Calibre to import into a custom filed you have to

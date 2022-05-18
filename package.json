@@ -34,7 +34,7 @@
     "uuid": "^3.0.1",
     "xml": "^1.0.1",
     "xmlserializer": "^0.6.0",
-    "zip-stream": "^1.1.0"
+    "zip-stream": "^4.1.0"
   },
   "files": [
     "index.js",
